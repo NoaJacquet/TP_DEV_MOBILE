@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ecran1 extends StatelessWidget {
+class Ecran1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    throw UnimplementedError();
+    return Container(
+      color: Colors.blue, // Changez la couleur d'arrière-plan selon vos besoins
+    );
   }
-
 }

@@ -1,76 +1,58 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'ecran1.dart';
 import 'ecran2.dart';
 import 'ecran3.dart';
 
-
-class MyApp extends StatelessWidget {
+class MyScaffold extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TD2',
-      home: MyHomePage(),
-    );
-  }
+  _MyScaffoldState createState() => _MyScaffoldState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+class _MyScaffoldState extends State<MyScaffold> {
+  int _currentIndex = 0;
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  final List<Widget> _screens = [
+    Ecran1(),
+    Ecran2(),
+    Ecran3(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AppBar Title'),
+        title: Text(
+          'AppBar Title',
+          style: Theme.of(context).textTheme.headline6,
+        ),
       ),
-      body: _getBody(_selectedIndex),
+      body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        selectedItemColor: Colors.blue, // Couleur des icônes sélectionnées
+        unselectedItemColor: Colors.grey, // Couleur des icônes non sélectionnées
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Ecran 1',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.search),
+            label: 'Ecran 2',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'settings',
+            icon: Icon(Icons.person),
+            label: 'Ecran 3',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
       ),
     );
-  }
-
-  Widget _getBody(int index) {
-    switch (index) {
-      case 0:
-        return ecran1();
-      case 1:
-        return ecran2();
-      case 2:
-        return ecran3();
-      default:
-        return Container();
-    }
   }
 }

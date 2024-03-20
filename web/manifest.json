@@ -1,6 +1,6 @@
 {
-    "name": "tp_dev_mobile",
-    "short_name": "tp_dev_mobile",
+    "name": "td2",
+    "short_name": "td2",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
