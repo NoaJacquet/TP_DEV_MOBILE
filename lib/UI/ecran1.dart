@@ -87,18 +87,38 @@ class _Ecran1State extends State<Ecran1> {
     );
   }
 
+  void _logout() async {
+    await PreferencesManager.removeLoggedInUser();
+    setState(() {
+      _loggedInUser = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: Center(
-        child: _loggedInUser != null
-            ? Text('Connecté en tant que $_loggedInUser')
-            : ElevatedButton(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ecran 1'),
+        leading: _loggedInUser != null
+            ? IconButton(
+          icon: Icon(Icons.logout),
           onPressed: () {
-            _showLoginDialog(context);
+            _logout();
           },
-          child: Text('Se connecter'),
+        )
+            : null,
+      ),
+      body: Container(
+        color: Colors.blue,
+        child: Center(
+          child: _loggedInUser != null
+              ? Text('Connecté en tant que $_loggedInUser')
+              : ElevatedButton(
+            onPressed: () {
+              _showLoginDialog(context);
+            },
+            child: Text('Se connecter'),
+          ),
         ),
       ),
     );

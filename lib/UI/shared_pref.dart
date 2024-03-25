@@ -20,4 +20,9 @@ class PreferencesManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('logged_in_user', pseudo);
   }
+
+  static Future<void> removeLoggedInUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('logged_in_user');
+  }
 }
