@@ -33,6 +33,7 @@ dependencies:
   google_fonts: ^4.0.0
   http: ^0.13.3
   settings_ui: ^2.0.2
+  shared_preferences: ^2.0.0
 
 
 
