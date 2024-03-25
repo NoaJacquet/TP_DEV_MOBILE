@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'ecran1.dart';
 import 'ecran2.dart';
@@ -25,7 +24,7 @@ class _MyScaffoldState extends State<MyScaffold> {
       appBar: AppBar(
         title: Text(
           'AppBar Title',
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       body: _screens[_currentIndex],
@@ -41,15 +40,15 @@ class _MyScaffoldState extends State<MyScaffold> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Ecran 1',
+            label: 'Accueil',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Ecran 2',
+            label: 'Historiques des scores',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Ecran 3',
+            label: 'Règles',
           ),
         ],
       ),
