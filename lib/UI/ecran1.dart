@@ -158,7 +158,7 @@ class _Ecran1State extends State<Ecran1> {
               left: 10,
               child: _loggedInUser != null
                   ? IconButton(
-                icon: Icon(Icons.logout),
+                icon: Icon(Icons.logout, color: Colors.black),
                 onPressed: () {
                   _logout();
                 },
