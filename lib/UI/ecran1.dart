@@ -135,12 +135,15 @@ class _Ecran1State extends State<Ecran1> {
   }
 
   // Fonction pour naviguer vers le jeu après une connexion réussie
+// Fonction pour naviguer vers la page de jeu après une connexion réussie
   void _loginSuccess(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Jeu()),
+      MaterialPageRoute(builder: (context) => Jeu()), // Remplace l'écran actuel par la page de jeu
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {

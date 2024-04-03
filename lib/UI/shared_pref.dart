@@ -25,4 +25,10 @@ class PreferencesManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('logged_in_user');
   }
+
+  // Méthode pour vérifier si un utilisateur est connecté
+  static Future<bool> isLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey('logged_in_user');
+  }
 }
