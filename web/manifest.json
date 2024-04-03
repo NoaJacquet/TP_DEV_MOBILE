@@ -1,6 +1,6 @@
 {
-    "name": "td2",
-    "short_name": "td2",
+    "name": "tp_mobile",
+    "short_name": "tp_mobile",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
