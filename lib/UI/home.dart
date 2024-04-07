@@ -25,7 +25,7 @@ class _MyScaffoldState extends State<MyScaffold> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'AppBar Title',
+          'Nombre mystère',
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -64,15 +64,15 @@ class _MyScaffoldState extends State<MyScaffold> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Ecran 1',
+          label: 'Accueil',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          label: 'Ecran 2',
+          label: 'Score',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Ecran 3',
+          label: 'Règle',
         ),
       ],
     );

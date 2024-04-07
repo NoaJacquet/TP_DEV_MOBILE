@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'shared_pref.dart';
-import 'jeu.dart'; // Importer le fichier jeu.dart
+import 'jeu.dart';
 
 class Ecran1 extends StatefulWidget {
   @override
@@ -8,8 +8,9 @@ class Ecran1 extends StatefulWidget {
 }
 
 class _Ecran1State extends State<Ecran1> {
+  bool isConnected = false; // Variable pour suivre l'état de la connexion
   String? _loggedInUser;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Ajout de la clé globale pour le Scaffold
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -21,6 +22,7 @@ class _Ecran1State extends State<Ecran1> {
     String? loggedInUser = await PreferencesManager.getLoggedInUser();
     setState(() {
       _loggedInUser = loggedInUser;
+      isConnected = loggedInUser != null; // Initialise isConnected en fonction de l'état de connexion
     });
   }
 
@@ -47,7 +49,7 @@ class _Ecran1State extends State<Ecran1> {
                   obscureText: true,
                   decoration: InputDecoration(labelText: 'Mot de passe'),
                 ),
-                if(errorMessage.isNotEmpty)
+                if (errorMessage.isNotEmpty)
                   Text(errorMessage, style: TextStyle(color: Colors.red)),
               ],
             ),
@@ -56,7 +58,7 @@ class _Ecran1State extends State<Ecran1> {
             TextButton(
               child: Text('Annuler'),
               onPressed: () {
-                Navigator.of(context).pop(false); // Connexion annulée
+                Navigator.of(context).pop(false);
               },
             ),
             ElevatedButton(
@@ -69,14 +71,15 @@ class _Ecran1State extends State<Ecran1> {
                 if (savedPassword == null || savedPassword != password) {
                   errorMessage = 'Pseudo ou mot de passe incorrect';
                   _showErrorMessage(errorMessage);
-                  Navigator.of(context).pop(false); // Connexion échouée
+                  Navigator.of(context).pop(false);
                 } else {
                   print('Connexion réussie');
                   setState(() {
                     _loggedInUser = pseudo;
+                    isConnected = true; // Marquer comme connecté si la connexion réussie
                   });
                   await PreferencesManager.setLoggedInUser(pseudo);
-                  Navigator.of(context).pop(true); // Connexion réussie
+                  Navigator.of(context).pop(true);
                 }
               },
             ),
@@ -94,9 +97,10 @@ class _Ecran1State extends State<Ecran1> {
                   await PreferencesManager.saveUserCredentials(pseudo, password);
                   setState(() {
                     _loggedInUser = pseudo;
+                    isConnected = true; // Marquer comme connecté si la connexion réussie
                   });
                   await PreferencesManager.setLoggedInUser(pseudo);
-                  Navigator.of(context).pop(true); // Inscription réussie, connexion réussie
+                  Navigator.of(context).pop(true);
                 }
               },
             ),
@@ -110,10 +114,10 @@ class _Ecran1State extends State<Ecran1> {
     await PreferencesManager.removeLoggedInUser();
     setState(() {
       _loggedInUser = null;
+      isConnected = false; // Déconnexion, donc isConnected à false
     });
   }
 
-  // Fonction pour afficher le message d'erreur dans une boîte de dialogue
   void _showErrorMessage(String message) {
     showDialog(
       context: context,
@@ -134,18 +138,10 @@ class _Ecran1State extends State<Ecran1> {
     );
   }
 
-  // Fonction pour naviguer vers le jeu après une connexion réussie
-  void _loginSuccess(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Jeu()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey, // Ajout de la clé globale au Scaffold
+      key: _scaffoldKey,
       body: Container(
         color: Colors.blue,
         child: Stack(
@@ -163,13 +159,17 @@ class _Ecran1State extends State<Ecran1> {
                   : Container(),
             ),
             Center(
-              child: _loggedInUser != null
+              child: isConnected
+                  ? Jeu() // Si connecté, affiche le jeu
+                  : _loggedInUser != null
                   ? Text('Connecté en tant que $_loggedInUser')
                   : ElevatedButton(
                 onPressed: () async {
                   bool? success = await _showLoginDialog(context);
-                  if (success ?? false) {
-                    _loginSuccess(context);
+                  if (success != null && success) {
+                    setState(() {
+                      isConnected = true; // Marquer comme connecté si la connexion réussie
+                    });
                   }
                 },
                 child: Text('Se connecter'),
